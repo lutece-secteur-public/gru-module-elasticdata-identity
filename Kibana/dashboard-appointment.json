@@ -1,0 +1,19 @@
+[
+  {
+    "_id": "d3704c40-5be5-11e7-bf14-297292287b63",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Appointment dashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":1,\"id\":\"6df5e780-5be5-11e7-bf14-297292287b63\",\"panelIndex\":1,\"row\":1,\"size_x\":12,\"size_y\":7,\"type\":\"visualization\"}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]
