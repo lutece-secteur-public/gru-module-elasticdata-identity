@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 
@@ -47,11 +46,11 @@ import fr.paris.lutece.util.sql.DAOUtil;
 /**
  * This class provides Data Access methods for IdentityAttribute objects
  */
-public final class IdentityAttributeDAO implements IIdentityAttributeDAO
+public final class IdentityDataObjectDAO implements IIdentityDataObjectDAO
 {
     // Constants
-	private static final String SQL_QUERY_SELECT_IDENTITY_TO_EXPORT = "SELECT DISTINCT(id_identity) FROM identitystore_identity_attribute";
-	private static final String SQL_QUERY_SELECT_IDENTITY_ATTRIBUTE = "SELECT id_identity, id_attribute, attribute_value, id_certification, lastupdate_date FROM identitystore_identity_attribute ";
+	private static final String SQL_QUERY_SELECT_IDENTITY_TO_EXPORT = "SELECT id_identity,date_create FROM identitystore_identity";
+	private static final String SQL_QUERY_SELECT_IDENTITY_ATTRIBUTE = "SELECT id_identity, id_attribute, attribute_value, lastupdate_date,certifier_code,certificate_date,certificate_level,expiration_date FROM identitystore_identity_attribute LEFT JOIN identitystore_attribute_certificate on(id_certification=id_attribute_certificate) ";
 	private static final String SQL_QUERY_SELECT_FILTER = "WHERE id_identity  in ( ";
 	
 
@@ -59,11 +58,11 @@ public final class IdentityAttributeDAO implements IIdentityAttributeDAO
      * {@inheritDoc }
      */
     @Override
-    public List<IdentityAttribute> selectAttributes(Collection<Integer> lIdIdentity, Plugin plugin )
+    public List<IdentityAttributeDataObject> selectAttributes(Collection<IdentityDataObject> lIdIdentity, Plugin plugin )
     {
         
     	
-    	List<IdentityAttribute> ListIdentityAttributes=new ArrayList<>();
+    	List<IdentityAttributeDataObject> ListIdentityAttributes=new ArrayList<>();
     	
     	
     	StringBuffer strQuery=new StringBuffer( SQL_QUERY_SELECT_IDENTITY_ATTRIBUTE );
@@ -71,7 +70,7 @@ public final class IdentityAttributeDAO implements IIdentityAttributeDAO
     	
     	if(!CollectionUtils.isEmpty( lIdIdentity ))
     	
-    	for(Integer id:lIdIdentity)
+    	for(IdentityDataObject id:lIdIdentity)
     	{
     	    strQuery.append( "?," );
     	 }
@@ -79,21 +78,24 @@ public final class IdentityAttributeDAO implements IIdentityAttributeDAO
     	strQuery.append( ")" );
     	DAOUtil daoUtil = new DAOUtil( strQuery.toString( ), plugin );
     	int ncpt=1;
-    	for(Integer id:lIdIdentity)
+    	for(IdentityDataObject id:lIdIdentity)
         {
-    	    daoUtil.setInt( ncpt++, id );
+    	    daoUtil.setInt( ncpt++, id.getIdIdentity() );
          }
         daoUtil.executeQuery( );
         int nIndex;
         while ( daoUtil.next( ) )
         {
-            IdentityAttribute identityAttribute = new IdentityAttribute( );
+            IdentityAttributeDataObject identityAttribute = new IdentityAttributeDataObject( );
             nIndex = 1;
             identityAttribute.setIdIdentity( daoUtil.getInt(nIndex++) );
             identityAttribute.setIdAttribute(daoUtil.getInt(nIndex++) );
             identityAttribute.setValue( daoUtil.getString( nIndex++ ) );
-            identityAttribute.setIdCertificate(daoUtil.getInt(nIndex++));
             identityAttribute.setLastUpdateDate( daoUtil.getTimestamp( nIndex++ ) );
+            identityAttribute.setCertifierCode( daoUtil.getString( nIndex++ ) );
+            identityAttribute.setCertificateDate(daoUtil.getObject( nIndex++ )!=null ?daoUtil.getTimestamp( nIndex ):null);
+            identityAttribute.setCertificateLevel(daoUtil.getString( nIndex++ ));
+            identityAttribute.setCertificateExpirationDate(daoUtil.getObject( nIndex++ )!=null ?daoUtil.getTimestamp( nIndex ):null);
             ListIdentityAttributes.add(identityAttribute);
 
         }
@@ -110,18 +112,17 @@ public final class IdentityAttributeDAO implements IIdentityAttributeDAO
      * {@inheritDoc }
      */
     @Override
-    public Collection<Integer> selectAllIdIdentity( Plugin plugin )
+    public Collection<IdentityDataObject> selectAllIdIdentity( Plugin plugin )
     {
         
-       Collection<Integer> listIdentity=new HashSet<Integer>();
+       Collection<IdentityDataObject> listIdentity=new HashSet<IdentityDataObject>();
     	//SELECT id_identity, id_attribute, attribute_value, id_certification, id_file, lastupdate_date 
         DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_IDENTITY_TO_EXPORT, plugin );
         daoUtil.executeQuery( );
 
         while ( daoUtil.next( ) )
         {
-           
-        	listIdentity.add(daoUtil.getInt(1));
+           listIdentity.add(new IdentityDataObject(daoUtil.getInt(1),daoUtil.getTimestamp(2)));
         }
         
         daoUtil.free( );

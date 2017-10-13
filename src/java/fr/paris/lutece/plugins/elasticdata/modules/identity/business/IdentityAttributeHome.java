@@ -46,7 +46,7 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 public final class IdentityAttributeHome
 {
     // Static variable pointed at the DAO instance
-    private static IIdentityAttributeDAO _dao = SpringContextService.getBean( IIdentityAttributeDAO.BEAN_NAME );
+    private static IIdentityDataObjectDAO _dao = SpringContextService.getBean( IIdentityDataObjectDAO.BEAN_NAME );
     private static Plugin _plugin = PluginService.getPlugin( "elasticdata-identity");
 
     /**
@@ -66,14 +66,14 @@ public final class IdentityAttributeHome
      *            identityId
      * @return list of attribute changes
      */
-    public static  List<IdentityAttribute> selectAttributesByIdentities(Collection<Integer> lIdIdentity )
+    public static  List<IdentityAttributeDataObject> selectAttributesByIdentities(Collection<IdentityDataObject> lIdIdentity )
     {
         return _dao.selectAttributes(lIdIdentity, _plugin);
     }
     
     
     
-    public static Collection<Integer> selectIdIdentitiesToExport( )
+    public static Collection<IdentityDataObject> selectIdIdentitiesToExport( )
     {
     	
     	return _dao.selectAllIdIdentity(_plugin);

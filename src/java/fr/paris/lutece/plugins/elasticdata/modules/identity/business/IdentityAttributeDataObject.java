@@ -33,29 +33,29 @@
  */
 package fr.paris.lutece.plugins.elasticdata.modules.identity.business;
 
-import fr.paris.lutece.portal.business.file.File;
-
-import org.hibernate.validator.constraints.NotEmpty;
-
 import java.io.Serializable;
-
 import java.sql.Timestamp;
 
-import javax.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * This is the business class for the object IdentityAttribute
  */
-public class IdentityAttribute implements Serializable {
+public class IdentityAttributeDataObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int _nIdIdentity;
 	private int _nIdAttribute;
 	private String _strValue;
 	private int _nIdCertificate;
-	private File _file;
-	private int _nIdCertifier;
-
 	private Timestamp _dateLastUpdate;
+	private String _strCertifierCode;
+	private Timestamp _certificateDate;
+	private String _strCertificateLevel;
+	private Timestamp _certificateExpirationDate;
+	
+	
+	
+	
 
 	/**
 	 * Returns the IdIdentity
@@ -114,24 +114,11 @@ public class IdentityAttribute implements Serializable {
 		_nIdCertificate = nIdCertificate;
 	}
 
-	/**
-	 * @return the file
-	 */
-	public File getFile() {
-		return _file;
-	}
-
-	/**
-	 * @param file
-	 *            the file to set
-	 */
-	public void setFile(File file) {
-		this._file = file;
-	}
-
+	
 	/**
 	 * @return the _dateLastUpdate
 	 */
+	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm" )
 	public Timestamp getLastUpdateDate() {
 		return _dateLastUpdate;
 	}
@@ -152,11 +139,39 @@ public class IdentityAttribute implements Serializable {
 		this._nIdAttribute = _nIdAttribute;
 	}
 
-	public int getIdCertifier() {
-		return _nIdCertifier;
+	
+
+	public String getCertifierCode() {
+		return _strCertifierCode;
 	}
 
-	public void setIdCertifier(int nIdCertifier) {
-		this._nIdCertifier = nIdCertifier;
+	public void setCertifierCode(String _strCertifierCode) {
+		this._strCertifierCode = _strCertifierCode;
+	}
+	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm" )
+	public Timestamp getCertificateDate() {
+		return _certificateDate;
+	}
+
+	public void setCertificateDate(Timestamp _certificateDate) {
+		this._certificateDate = _certificateDate;
+	}
+
+
+	@JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm" )
+	public Timestamp getCertificateExpirationDate() {
+		return _certificateExpirationDate;
+	}
+
+	public void setCertificateExpirationDate(Timestamp _certificateExpirationDate) {
+		this._certificateExpirationDate = _certificateExpirationDate;
+	}
+
+	public String getCertificateLevel() {
+		return _strCertificateLevel;
+	}
+
+	public void setCertificateLevel(String _strCertificateLevel) {
+		this._strCertificateLevel = _strCertificateLevel;
 	}
 }

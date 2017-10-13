@@ -41,10 +41,10 @@ import fr.paris.lutece.portal.service.plugin.Plugin;
 /**
  * IIdentityAttributeDAO Interface
  */
-public interface IIdentityAttributeDAO
+public interface IIdentityDataObjectDAO
 {
-    public final static String BEAN_NAME = "elasticdata-identity.identityAttributeDAO";
+    public final static String BEAN_NAME = "elasticdata-identity.identityDataObjectDAO";
 
-    List<IdentityAttribute> selectAttributes(Collection<Integer> lIdIdentity, Plugin plugin );
-    Collection<Integer>  selectAllIdIdentity( Plugin plugin );
+    List<IdentityAttributeDataObject> selectAttributes(Collection<IdentityDataObject> lIdIdentity, Plugin plugin );
+    Collection<IdentityDataObject>  selectAllIdIdentity( Plugin plugin );
 }

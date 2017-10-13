@@ -12,6 +12,6 @@
            <property name="dataType" value="identitydataobject" />
        </bean>
 <!-- Identity DAO -->	
- <bean id="elasticdata-identity.identityAttributeDAO" class="fr.paris.lutece.plugins.elasticdata.modules.identity.business.IdentityAttributeDAO" />
+ <bean id="elasticdata-identity.identityDataObjectDAO" class="fr.paris.lutece.plugins.elasticdata.modules.identity.business.IdentityDataObjectDAO" />
       
 </beans>
