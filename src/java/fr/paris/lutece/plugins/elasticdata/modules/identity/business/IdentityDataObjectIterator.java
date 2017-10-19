@@ -64,13 +64,15 @@ public class IdentityDataObjectIterator implements Iterator<DataObject> {
 	private synchronized void loadNextTmpIdentityDataObject() {
 		
 	    Collection<IdentityDataObject> lisIdTmpToLoad=null;
+	    IdentityDataObject identityData=null;
 		if(_iterator.hasNext( ))
 		{
 			
 			    lisIdTmpToLoad=new ArrayList<>( );
 			    while(_iterator.hasNext( ))
                 {
-                    lisIdTmpToLoad.add(new IdentityDataObject( _iterator.next( ).getIdIdentity(),_iterator.next().getDateCreation()));
+			        identityData=_iterator.next( );
+                    lisIdTmpToLoad.add(new IdentityDataObject( identityData.getIdIdentity(),identityData.getDateCreation()));
                     if(lisIdTmpToLoad.size( )==NB_TMP_DATA_OBJ_LOAD)
                     {
                         break;

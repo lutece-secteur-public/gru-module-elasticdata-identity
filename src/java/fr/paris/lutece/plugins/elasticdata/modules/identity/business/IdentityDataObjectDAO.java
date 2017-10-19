@@ -93,9 +93,9 @@ public final class IdentityDataObjectDAO implements IIdentityDataObjectDAO
             identityAttribute.setValue( daoUtil.getString( nIndex++ ) );
             identityAttribute.setLastUpdateDate( daoUtil.getTimestamp( nIndex++ ) );
             identityAttribute.setCertifierCode( daoUtil.getString( nIndex++ ) );
-            identityAttribute.setCertificateDate(daoUtil.getObject( nIndex++ )!=null ?daoUtil.getTimestamp( nIndex ):null);
+            identityAttribute.setCertificateDate(daoUtil.getTimestamp( nIndex++ ));
             identityAttribute.setCertificateLevel(daoUtil.getString( nIndex++ ));
-            identityAttribute.setCertificateExpirationDate(daoUtil.getObject( nIndex++ )!=null ?daoUtil.getTimestamp( nIndex ):null);
+            identityAttribute.setCertificateExpirationDate(daoUtil.getTimestamp( nIndex++ ));
             ListIdentityAttributes.add(identityAttribute);
 
         }
