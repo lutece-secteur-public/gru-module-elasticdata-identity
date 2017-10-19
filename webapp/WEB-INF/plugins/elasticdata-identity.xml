@@ -2,7 +2,7 @@
 <plug-in>
     <name>elasticdata-identity</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <documentation></documentation>
     <installation></installation>
     <changes></changes>
@@ -11,8 +11,8 @@
     <provider>module.elasticdata.identity.module.provider</provider>
     <provider-url>http://your.web.site.com</provider-url>
     <icon-url>images/admin/skin/feature_default_icon.png</icon-url>
-    <copyright>Copyright (c) 2017 City of Paris</copyright>
-    <db-pool-required>1</db-pool-required>
+    <copyright>Copyright (c) 2022 City of Paris</copyright>
+    <db-pool-required>0</db-pool-required>
     
     <core-version-dependency>
         <min-core-version>4.1.0</min-core-version>

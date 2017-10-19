@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2022, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,8 @@ package fr.paris.lutece.plugins.elasticdata.modules.identity.business;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -47,7 +49,7 @@ public final class IdentityAttributeHome
 {
     // Static variable pointed at the DAO instance
     private static IIdentityDataObjectDAO _dao = SpringContextService.getBean( IIdentityDataObjectDAO.BEAN_NAME );
-    private static Plugin _plugin = PluginService.getPlugin( "elasticdata-identity");
+    private static Plugin _plugin = PluginService.getPlugin( "identitystore" );
 
     /**
      * Private constructor - this class need not be instantiated
@@ -56,7 +58,6 @@ public final class IdentityAttributeHome
     {
     }
 
-    
     /**
      * get attribute change event in history table from the newest to the latest change
      *
@@ -66,20 +67,27 @@ public final class IdentityAttributeHome
      *            identityId
      * @return list of attribute changes
      */
-    public static  List<IdentityAttributeDataObject> selectAttributesByIdentities(Collection<IdentityDataObject> lIdIdentity )
+    public static List<IdentityAttributeDataObject> selectAttributesByIdentities( Collection<IdentityDataObject> lIdIdentity )
     {
-        return _dao.selectAttributes(lIdIdentity, _plugin);
+        return _dao.selectAttributes( lIdIdentity, _plugin );
     }
-    
-    
-    
-    public static Collection<IdentityDataObject> selectIdIdentitiesToExport( )
-    {
-    	
-    	return _dao.selectAllIdIdentity(_plugin);
-    }
-    
-    
 
-  
+    public static List<IdentityDataObject> selectIdentitiesToExport( List<String> listIdIdentity )
+    {
+
+        return _dao.selectAllIdentity( listIdIdentity.stream( ).map( s -> Integer.valueOf( s ) ).collect( Collectors.toList( ) ), _plugin );
+    }
+
+    public static List<Integer> selectIdIdentitiesToExport( )
+    {
+
+        return _dao.selectAllIdIdentity( _plugin );
+    }
+
+    public static Map<Integer, String> selectAllAttributes( )
+    {
+
+        return _dao.selectAllAttributes( _plugin );
+    }
+
 }

@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document>
     <properties>
-        <title>Plugin elasticdata-appointment</title>
+        <title>Module elasticdata-identity</title>
     </properties>
     <body>
-        <section name="Plugin elasticdata-appointment">
-            <!--
-            <p>
-                <img src="images/elasticdata-appointment.png" />
-            </p>
-            -->
+        <section name="Plugin elasticdata-identity">
             <subsection name="Introduction">
                 <p></p>
             </subsection>

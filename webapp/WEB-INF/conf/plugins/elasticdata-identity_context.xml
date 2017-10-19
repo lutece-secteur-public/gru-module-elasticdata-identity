@@ -4,13 +4,27 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" >
 
-	<!-- Appointment datasource -->
+	<!-- Identity datasource -->
        <bean id="elasticdata-identity.identitydataSource" class="fr.paris.lutece.plugins.elasticdata.modules.identity.business.IdentityDataSource" >
            <property name="id" value="IdentityDataSource" />
            <property name="name" value="Identity Data Source" />
            <property name="targetIndexName" value="identitydatasource" />
-           <property name="dataType" value="identitydataobject" />
-       </bean>
+              <property name="mappings">
+              <value><![CDATA[
+                                   {
+                                   "mappings": {
+                                          "properties": {
+                                          "timestamp": {
+                                          "type":   "date",
+                                          "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+                                          }
+                                          }
+                                   }
+                                   }
+                                   ]]>
+              </value>
+              </property>
+           </bean>
 <!-- Identity DAO -->	
  <bean id="elasticdata-identity.identityDataObjectDAO" class="fr.paris.lutece.plugins.elasticdata.modules.identity.business.IdentityDataObjectDAO" />
       

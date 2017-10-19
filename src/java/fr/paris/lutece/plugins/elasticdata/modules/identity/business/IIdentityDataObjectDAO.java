@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2016, Mairie de Paris
+ * Copyright (c) 2002-2022, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.elasticdata.modules.identity.business;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
@@ -45,6 +46,12 @@ public interface IIdentityDataObjectDAO
 {
     public final static String BEAN_NAME = "elasticdata-identity.identityDataObjectDAO";
 
-    List<IdentityAttributeDataObject> selectAttributes(Collection<IdentityDataObject> lIdIdentity, Plugin plugin );
-    Collection<IdentityDataObject>  selectAllIdIdentity( Plugin plugin );
+    List<IdentityAttributeDataObject> selectAttributes( Collection<IdentityDataObject> lIdIdentity, Plugin plugin );
+
+    List<IdentityDataObject> selectAllIdentity( List<Integer> listIdIdentity, Plugin plugin );
+
+    List<Integer> selectAllIdIdentity( Plugin plugin );
+
+    Map<Integer, String> selectAllAttributes( Plugin plugin );
+
 }

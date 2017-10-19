@@ -1,17 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-    <parent>
-        <artifactId>lutece-global-pom</artifactId>
-        <groupId>fr.paris.lutece.tools</groupId>
-        <version>3.0.11</version>
-    </parent>
-
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>lutece-global-pom</artifactId>
+		<groupId>fr.paris.lutece.tools</groupId>
+		<version>5.2.1</version>
+	</parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>fr.paris.lutece.plugins</groupId>
-        <artifactId>module-elasticdata-identity</artifactId>
+    <artifactId>module-elasticdata-identity</artifactId>
     <packaging>lutece-plugin</packaging>
     <version>1.0.0-SNAPSHOT</version>
-    	<name>Lutece elasticdata appointment module</name>
+    	<name>Lutece elasticdata identity module</name>
     <repositories>
         <repository>
             <id>lutece</id>
@@ -20,24 +19,22 @@
             <layout>default</layout>
         </repository>
     </repositories>
-
     <dependencies>
         <dependency>
             <groupId>fr.paris.lutece</groupId>
             <artifactId>lutece-core</artifactId>
-            <version>[5.0.0,)</version>
+            <version>[7.0.0-SNAPSHOT,)</version>
             <type>lutece-core</type>
         </dependency>
         <dependency>
-         	<groupId>fr.paris.lutece.plugins</groupId>
-        	<artifactId>plugin-elasticdata</artifactId>
-        	<version>[1.0.1,)</version>
-        	<type>lutece-plugin</type>
+            <groupId>fr.paris.lutece.plugins</groupId>
+            <artifactId>plugin-elasticdata</artifactId>
+            <version>[2.0.0,)</version>
+            <type>lutece-plugin</type>
         </dependency>
    </dependencies>
-
     <properties>
-        <componentName>elasticdata-appointment</componentName>
+        <componentName>elasticdata-identity</componentName>
         <jiraProjectName>MEAPPT</jiraProjectName>
         <jiraComponentId></jiraComponentId>
     </properties>
