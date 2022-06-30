@@ -43,16 +43,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import fr.paris.lutece.plugins.elasticdata.business.AbstractDataSource;
 import fr.paris.lutece.plugins.elasticdata.business.DataObject;
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 public class IdentityDataSource extends AbstractDataSource
 {
-    Map<Integer, String> _mapAttributes = new HashMap<>( );
-    private static final int SQL_MAX_SELECT_IN = 80;
+    Map<Integer, String> _mapAttributes = null;
+    public static final String PROPERTY_SELECT_IN_SIZE = "elasticdata-identity.select_in_size";
+    public static final int SQL_MAX_SELECT_IN = AppPropertiesService.getPropertyInt( PROPERTY_SELECT_IN_SIZE, 80 );
 
     @Override
     public List<String> getIdDataObjects( )
     {
-        _mapAttributes = IdentityAttributeHome.selectAllAttributes( );
         return IdentityAttributeHome.selectIdIdentitiesToExport( ).stream( ).map( s -> String.valueOf( s ) ).collect( Collectors.toList( ) );
     }
 
@@ -60,13 +61,14 @@ public class IdentityDataSource extends AbstractDataSource
     public List<DataObject> getDataObjects( List<String> listIdIdentity )
     {
         List<DataObject> collResult = new ArrayList<>( );
+        getAttributesList( );
 
         AtomicInteger counter = new AtomicInteger( );
         // split for db performance
         Map<Integer, List<String>> listIdDataObjectSplited = listIdIdentity.stream( )
                 .collect( Collectors.groupingBy( it -> counter.getAndIncrement( ) / SQL_MAX_SELECT_IN ) );
 
-        listIdDataObjectSplited.entrySet( ).stream( ).forEach( e -> {
+        listIdDataObjectSplited.entrySet( ).parallelStream( ).forEach( e -> {
 
             List<IdentityDataObject> listIdentityDataObject = IdentityAttributeHome.selectIdentitiesToExport( e.getValue( ) );
             List<IdentityAttributeDataObject> attributes = IdentityAttributeHome.selectAttributesByIdentities( listIdentityDataObject );
@@ -101,15 +103,23 @@ public class IdentityDataSource extends AbstractDataSource
             String strAttributeName = _mapAttributes.get( attribute.getIdAttribute( ) );
             if ( attribute.getCertificateDate( ) != null )
             {
-                mapAttributes.put( strAttributeName + ".certificateDate", attribute.getCertificateDate( ).toString( ) );
-                mapAttributes.put( strAttributeName + ".certificateLevel", attribute.getCertificateLevel( ) );
-                mapAttributes.put( strAttributeName + ".certifierCode", attribute.getCertifierCode( ) );
-                mapAttributes.put( strAttributeName + ".idCertificate", String.valueOf( attribute.getIdCertificate( ) ) );
+                mapAttributes.put( strAttributeName + "_certificateDate", attribute.getCertificateDate( ).toString( ) );
+                mapAttributes.put( strAttributeName + "_certificateLevel", attribute.getCertificateLevel( ) );
+                mapAttributes.put( strAttributeName + "_certifierCode", attribute.getCertifierCode( ) );
+                mapAttributes.put( strAttributeName + "_idCertificate", String.valueOf( attribute.getIdCertificate( ) ) );
             }
-            mapAttributes.put( strAttributeName + ".idAttribute", String.valueOf( attribute.getIdAttribute( ) ) );
-            mapAttributes.put( strAttributeName + ".lastUpdateDate", attribute.getLastUpdateDate( ).toString( ) );
-            mapAttributes.put( strAttributeName + ".value", attribute.getValue( ) );
+            mapAttributes.put( strAttributeName + "_idAttribute", String.valueOf( attribute.getIdAttribute( ) ) );
+            mapAttributes.put( strAttributeName + "_lastUpdateDate", attribute.getLastUpdateDate( ).toString( ) );
+            mapAttributes.put( strAttributeName + "_value", attribute.getValue( ) );
         }
         return mapAttributes;
+    }
+
+    private void getAttributesList( )
+    {
+        if ( _mapAttributes == null )
+        {
+            _mapAttributes = IdentityAttributeHome.selectAllAttributes( );
+        }
     }
 }

@@ -46,15 +46,22 @@ public class IdentityDataObject extends AbstractDataObject
 
     private Date _dateLastUpdate;
     private Date _dateCreation;
+    private Date _dateDeleted;
+
     private String _strUserAccessCode;
     private Map<String, String> _mapAttributes;
 
-    public IdentityDataObject( int nIdIdentity, String strCustomerId, Date dateCreation )
+    public IdentityDataObject( int nIdIdentity, String strCustomerId, Date dateCreation, Date dateDeleted )
     {
         this.setId( String.valueOf( nIdIdentity ) );
         this._mapAttributes = new HashMap<>( );
         this._dateCreation = dateCreation;
+        this._dateDeleted = dateDeleted;
         this._strUserAccessCode = strCustomerId;
+        if ( dateCreation != null )
+        {
+            this.setTimestamp( dateCreation.getTime( ) );
+        }
     }
 
     @JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm" )
@@ -87,6 +94,17 @@ public class IdentityDataObject extends AbstractDataObject
     public void setDateCreation( Date _dateCreation )
     {
         this._dateCreation = _dateCreation;
+    }
+
+    @JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm" )
+    public Date getDateDeleted( )
+    {
+        return _dateDeleted;
+    }
+
+    public void setDateDeleted( Date _dateDeleted )
+    {
+        this._dateDeleted = _dateDeleted;
     }
 
     public String getUserAccessCode( )

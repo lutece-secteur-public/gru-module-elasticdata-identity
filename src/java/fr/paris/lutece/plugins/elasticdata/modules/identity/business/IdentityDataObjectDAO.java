@@ -49,7 +49,7 @@ public final class IdentityDataObjectDAO implements IIdentityDataObjectDAO
 {
     // Constants
     private static final String SQL_QUERY_SELECT_ID_IDENTITY_TO_EXPORT = "SELECT id_identity FROM identitystore_identity";
-    private static final String SQL_QUERY_SELECT_IDENTITY_TO_EXPORT = "SELECT id_identity, customer_id, date_create FROM identitystore_identity";
+    private static final String SQL_QUERY_SELECT_IDENTITY_TO_EXPORT = "SELECT id_identity, customer_id, date_create, date_delete FROM identitystore_identity";
     private static final String SQL_QUERY_SELECT_ATTRIBUTE = "SELECT id_attribute, key_name FROM identitystore_attribute";
     private static final String SQL_QUERY_SELECT_IDENTITY_ATTRIBUTE = "SELECT id_identity, id_attribute, attribute_value, lastupdate_date,certifier_code,certificate_date,certificate_level,expiration_date FROM identitystore_identity_attribute LEFT JOIN identitystore_attribute_certificate on(id_certification=id_attribute_certificate) ";
     private static final String SQL_QUERY_SELECT_FILTER = "WHERE id_identity  in ( ";
@@ -124,7 +124,8 @@ public final class IdentityDataObjectDAO implements IIdentityDataObjectDAO
                 daoUtil.executeQuery( );
                 while ( daoUtil.next( ) )
                 {
-                    listIdentity.add( new IdentityDataObject( daoUtil.getInt( 1 ), daoUtil.getString( 2 ), daoUtil.getTimestamp( 3 ) ) );
+                    listIdentity
+                            .add( new IdentityDataObject( daoUtil.getInt( 1 ), daoUtil.getString( 2 ), daoUtil.getTimestamp( 3 ), daoUtil.getTimestamp( 4 ) ) );
                 }
             }
         }
