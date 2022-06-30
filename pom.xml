@@ -35,7 +35,7 @@
    </dependencies>
     <properties>
         <componentName>elasticdata-identity</componentName>
-        <jiraProjectName>MEAPPT</jiraProjectName>
+        <jiraProjectName>ELASTICID</jiraProjectName>
         <jiraComponentId></jiraComponentId>
     </properties>
      <scm>
