@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<artifactId>lutece-global-pom</artifactId>
 		<groupId>fr.paris.lutece.tools</groupId>
@@ -9,7 +8,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>module-elasticdata-identity</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     	<name>Lutece elasticdata identity module</name>
     <repositories>
         <repository>
@@ -36,12 +35,12 @@
     <properties>
         <componentName>elasticdata-identity</componentName>
         <jiraProjectName>ELASTICID</jiraProjectName>
-        <jiraComponentId></jiraComponentId>
+        <jiraComponentId />
     </properties>
      <scm>
         <connection>scm:git:https://github.com/lutece-secteur-public/gru-module-elasticdata-identity.git</connection>
         <developerConnection>scm:git:https://github.com/lutece-secteur-public/gru-module-elasticdata-identity.git</developerConnection>
         <url>https://github.com/lutece-secteur-public/gru-module-elasticdata-identity.git</url>
-      <tag>HEAD</tag>
+      <tag>module-elasticdata-identity-1.0.0</tag>
   </scm>
 </project>
