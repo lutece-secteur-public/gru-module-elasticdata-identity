@@ -27,5 +27,5 @@
            </bean>
 <!-- Identity DAO -->	
  <bean id="elasticdata-identity.identityDataObjectDAO" class="fr.paris.lutece.plugins.elasticdata.modules.identity.business.IdentityDataObjectDAO" />
-      
+ <bean id="elasticdata-identity.listener.identityIndexing" class="fr.paris.lutece.plugins.elasticdata.modules.identity.service.listener.IdentityIndexing"/> 
 </beans>
