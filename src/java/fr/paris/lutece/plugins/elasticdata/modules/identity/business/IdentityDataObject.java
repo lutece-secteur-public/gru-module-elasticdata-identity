@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.elasticdata.modules.identity.business;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -48,16 +49,19 @@ public class IdentityDataObject extends AbstractDataObject
     private Date _dateCreation;
     private Date _dateDeleted;
 
-    private String _strUserAccessCode;
-    private Map<String, String> _mapAttributes;
+    private String _strConnectionId;
+    private String _strCustomerId;
 
-    public IdentityDataObject( int nIdIdentity, String strCustomerId, Date dateCreation, Date dateDeleted )
+    private Map<String, IdentityAttributeDataObject> _mapAttributes;
+
+    public IdentityDataObject( int nIdIdentity, String strCustomerId, String strConnectionId, Date dateCreation, Date dateDeleted )
     {
         this.setId( String.valueOf( nIdIdentity ) );
         this._mapAttributes = new HashMap<>( );
         this._dateCreation = dateCreation;
         this._dateDeleted = dateDeleted;
-        this._strUserAccessCode = strCustomerId;
+        this._strConnectionId = strConnectionId;
+        this._strCustomerId = strCustomerId;
         if ( dateCreation != null )
         {
             this.setTimestamp( dateCreation.getTime( ) );
@@ -75,12 +79,12 @@ public class IdentityDataObject extends AbstractDataObject
         this._dateLastUpdate = _dateLastUpdate;
     }
 
-    public Map<String, String> getListAttribute( )
+    public Map<String, IdentityAttributeDataObject> getListAttribute( )
     {
         return _mapAttributes;
     }
 
-    public void setListAttribute( Map<String, String> _mapAttributes )
+    public void setListAttribute( Map<String, IdentityAttributeDataObject> _mapAttributes )
     {
         this._mapAttributes = _mapAttributes;
     }
@@ -107,14 +111,24 @@ public class IdentityDataObject extends AbstractDataObject
         this._dateDeleted = _dateDeleted;
     }
 
-    public String getUserAccessCode( )
+    public String getConnectionId( )
     {
-        return _strUserAccessCode;
+        return _strConnectionId;
     }
 
-    public void setUserAccessCode( String _strUserAccessCode )
+    public void setConnectionId( String _strConnectionId )
     {
-        this._strUserAccessCode = _strUserAccessCode;
+        this._strConnectionId = _strConnectionId;
+    }
+
+    public String getCustomerId( )
+    {
+        return _strCustomerId;
+    }
+
+    public void setCustomerId( String _strCustomerId )
+    {
+        this._strCustomerId = _strCustomerId;
     }
 
 }

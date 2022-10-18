@@ -95,22 +95,13 @@ public class IdentityDataSource extends AbstractDataSource
         return collResult;
     }
 
-    private Map<String, String> getAttributes( List<IdentityAttributeDataObject> attributes )
+    private Map<String, IdentityAttributeDataObject> getAttributes( List<IdentityAttributeDataObject> attributes )
     {
-        Map<String, String> mapAttributes = new HashMap<>( );
+        Map<String, IdentityAttributeDataObject> mapAttributes = new HashMap<>( );
         for ( IdentityAttributeDataObject attribute : attributes )
         {
             String strAttributeName = _mapAttributes.get( attribute.getIdAttribute( ) );
-            if ( attribute.getCertificateDate( ) != null )
-            {
-                mapAttributes.put( strAttributeName + "_certificateDate", attribute.getCertificateDate( ).toString( ) );
-                mapAttributes.put( strAttributeName + "_certificateLevel", attribute.getCertificateLevel( ) );
-                mapAttributes.put( strAttributeName + "_certifierCode", attribute.getCertifierCode( ) );
-                mapAttributes.put( strAttributeName + "_idCertificate", String.valueOf( attribute.getIdCertificate( ) ) );
-            }
-            mapAttributes.put( strAttributeName + "_idAttribute", String.valueOf( attribute.getIdAttribute( ) ) );
-            mapAttributes.put( strAttributeName + "_lastUpdateDate", attribute.getLastUpdateDate( ).toString( ) );
-            mapAttributes.put( strAttributeName + "_value", attribute.getValue( ) );
+            mapAttributes.put( strAttributeName, attribute );
         }
         return mapAttributes;
     }
