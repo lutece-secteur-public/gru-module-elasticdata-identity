@@ -8,7 +8,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>module-elasticdata-identity</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     	<name>Lutece elasticdata identity module</name>
     <repositories>
         <repository>
@@ -47,6 +47,6 @@
         <connection>scm:git:https://github.com/lutece-secteur-public/gru-module-elasticdata-identity.git</connection>
         <developerConnection>scm:git:https://github.com/lutece-secteur-public/gru-module-elasticdata-identity.git</developerConnection>
         <url>https://github.com/lutece-secteur-public/gru-module-elasticdata-identity.git</url>
-      <tag>module-elasticdata-identity-1.0.1</tag>
+      <tag>HEAD</tag>
   </scm>
 </project>
