@@ -33,6 +33,7 @@
  */
 package fr.paris.lutece.plugins.elasticdata.modules.identity.business;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -58,7 +59,7 @@ public class IdentityDataSource extends AbstractDataSource
     }
 
     @Override
-    public List<DataObject> getDataObjects( List<String> listIdIdentity )
+     public synchronized List<DataObject> getDataObjects( List<String> listIdIdentity )
     {
         List<DataObject> collResult = new ArrayList<>( );
         getAttributesList( );
@@ -68,7 +69,7 @@ public class IdentityDataSource extends AbstractDataSource
         Map<Integer, List<String>> listIdDataObjectSplited = listIdIdentity.stream( )
                 .collect( Collectors.groupingBy( it -> counter.getAndIncrement( ) / SQL_MAX_SELECT_IN ) );
 
-        listIdDataObjectSplited.entrySet( ).parallelStream( ).forEach( e -> {
+        listIdDataObjectSplited.entrySet( ).stream( ).forEach( e -> {
 
             List<IdentityDataObject> listIdentityDataObject = IdentityAttributeHome.selectIdentitiesToExport( e.getValue( ) );
             List<IdentityAttributeDataObject> attributes = IdentityAttributeHome.selectAttributesByIdentities( listIdentityDataObject );
@@ -113,4 +114,5 @@ public class IdentityDataSource extends AbstractDataSource
             _mapAttributes = IdentityAttributeHome.selectAllAttributes( );
         }
     }
+
 }
