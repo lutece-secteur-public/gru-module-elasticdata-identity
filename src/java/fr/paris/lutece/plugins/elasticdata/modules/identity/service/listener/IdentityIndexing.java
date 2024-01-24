@@ -33,34 +33,46 @@
  */
 package fr.paris.lutece.plugins.elasticdata.modules.identity.service.listener;
 
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
 import fr.paris.lutece.plugins.elasticdata.business.IndexerAction;
 import fr.paris.lutece.plugins.elasticdata.service.DataSourceIncrementalService;
-import fr.paris.lutece.plugins.identitystore.business.IdentityHome;
-import fr.paris.lutece.plugins.identitystore.service.AttributeChange;
-import fr.paris.lutece.plugins.identitystore.service.AttributeChangeListener;
+import fr.paris.lutece.plugins.identitystore.business.identity.Identity;
+import fr.paris.lutece.plugins.identitystore.business.identity.IdentityHome;
+import fr.paris.lutece.plugins.identitystore.service.IdentityChangeListener;
+import fr.paris.lutece.plugins.identitystore.v3.web.rs.dto.common.RequestAuthor;
+import fr.paris.lutece.plugins.identitystore.v3.web.rs.dto.history.IdentityChangeType;
+import fr.paris.lutece.plugins.identitystore.web.exception.IdentityStoreException;
 
 /**
  * This class represents a service to index a customer
  *
  */
-public class IdentityIndexing implements AttributeChangeListener
+public class IdentityIndexing implements IdentityChangeListener
 
 {
-    private static final String SERVICE_NAME = "Elasticdata Identity AttributeChangeListener";
+	private static final String SERVICE_NAME = "Elasticdata Identity IdentityChangeListener";
 
-    @Override
-    public void processAttributeChange( AttributeChange attributeChange )
-    {
-        Integer nIdIdentity = IdentityHome.findIdByConnectionId( attributeChange.getIdentityConnectionId( ) );
-        if ( nIdIdentity != 0 )
-        {
-            DataSourceIncrementalService.addTask( "IdentityDataSource", String.valueOf( nIdIdentity ), IndexerAction.TASK_CREATE );
-        }
-    }
 
-    @Override
-    public String getName( )
-    {
-        return SERVICE_NAME;
-    }
+
+	@Override
+	public String getName( )
+	{
+		return SERVICE_NAME;
+	}
+
+	@Override
+	public void processIdentityChange(IdentityChangeType identityChangeType, Identity identity, String statusCode,
+			String statusMessage, RequestAuthor author, String clientCode, Map<String, String> metadata)
+					throws IdentityStoreException 
+	{
+		int nId = IdentityHome.findIdByCustomerId(  identity.getCustomerId( ) );
+		if ( nId > 0 )
+		{
+			DataSourceIncrementalService.addTask( "IdentityDataSource", String.valueOf( nId ) , IndexerAction.TASK_CREATE );
+		}
+
+	}
 }

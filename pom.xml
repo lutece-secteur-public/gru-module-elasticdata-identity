@@ -8,7 +8,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>module-elasticdata-identity</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     	<name>Lutece elasticdata identity module</name>
     <repositories>
         <repository>
@@ -34,7 +34,7 @@
         <dependency>
             <groupId>fr.paris.lutece.plugins</groupId>
             <artifactId>plugin-identitystore</artifactId>
-            <version>[2.1.0-SNAPSHOT,)</version>
+            <version>[3.0.0-SNAPSHOT,)</version>
             <type>lutece-plugin</type>
         </dependency>
    </dependencies>

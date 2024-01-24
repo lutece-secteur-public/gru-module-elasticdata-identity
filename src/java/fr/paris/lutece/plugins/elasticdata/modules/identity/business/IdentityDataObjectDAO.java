@@ -50,10 +50,12 @@ public final class IdentityDataObjectDAO implements IIdentityDataObjectDAO
     // Constants
     private static final String SQL_QUERY_SELECT_ID_IDENTITY_TO_EXPORT = "SELECT id_identity FROM identitystore_identity";
     private static final String SQL_QUERY_SELECT_IDENTITY_TO_EXPORT = "SELECT id_identity, customer_id, connection_id, date_create, date_delete FROM identitystore_identity";
-    private static final String SQL_QUERY_SELECT_ATTRIBUTE = "SELECT id_attribute, key_name FROM identitystore_attribute";
-    private static final String SQL_QUERY_SELECT_IDENTITY_ATTRIBUTE = "SELECT id_identity, id_attribute, attribute_value, lastupdate_date,certifier_code,certificate_date,certificate_level,expiration_date FROM identitystore_identity_attribute LEFT JOIN identitystore_attribute_certificate on(id_certification=id_attribute_certificate) ";
-    private static final String SQL_QUERY_SELECT_FILTER = "WHERE id_identity  in ( ";
-    private static final String SQL_QUERY_SELECT_IDENTITY_FILTER = "WHERE id_identity in (?";
+    private static final String SQL_QUERY_SELECT_ATTRIBUTE = "SELECT id_attribute, key_name FROM identitystore_ref_attribute";
+    private static final String SQL_QUERY_SELECT_IDENTITY_ATTRIBUTE    = "SELECT a.id_identity, a.id_attribute, attribute_value, lastupdate_date,certifier_code,certificate_date,level, expiration_date " 
+    		+ " FROM identitystore_identity_attribute a , identitystore_identity_attribute_certificate c, identitystore_ref_certification_level l, identitystore_ref_certification_processus p,  identitystore_ref_certification_attribute_level lp "
+    		+ " WHERE  a.id_certification = c.id_attribute_certificate  and c.certifier_code = p.code and p.id_ref_attribute_certification_processus = lp.id_ref_attribute_certification_processus and lp.id_attribute = a.id_attribute and lp.id_ref_certification_level = l.id_ref_certification_level ";
+    private static final String SQL_QUERY_SELECT_FILTER = " and  id_identity  in ( ";
+    private static final String SQL_QUERY_SELECT_IDENTITY_FILTER = " WHERE id_identity in (?";
     private static final String SQL_CLOSE_PARENTHESIS = " ) ";
     private static final String SQL_ADITIONAL_PARAMETER = ",?";
 
