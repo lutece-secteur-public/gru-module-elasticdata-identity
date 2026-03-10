@@ -69,10 +69,16 @@ public final class IdentityDataObjectDAO implements IIdentityDataObjectDAO
         StringBuffer strQuery = new StringBuffer( SQL_QUERY_SELECT_IDENTITY_ATTRIBUTE );
         strQuery.append( SQL_QUERY_SELECT_FILTER );
         if ( !CollectionUtils.isEmpty( lIdIdentity ) )
+        {
             for ( IdentityDataObject id : lIdIdentity )
             {
                 strQuery.append( "?," );
             }
+        }
+        else
+        {
+        	return ListIdentityAttributes;
+        }
         strQuery.deleteCharAt( strQuery.length( ) - 1 );
         strQuery.append( ")" );
         DAOUtil daoUtil = new DAOUtil( strQuery.toString( ), plugin );
