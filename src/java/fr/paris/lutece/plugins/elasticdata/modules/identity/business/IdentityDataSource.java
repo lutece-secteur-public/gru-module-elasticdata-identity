@@ -72,25 +72,28 @@ public class IdentityDataSource extends AbstractDataSource
         listIdDataObjectSplited.entrySet( ).stream( ).forEach( e -> {
 
             List<IdentityDataObject> listIdentityDataObject = IdentityAttributeHome.selectIdentitiesToExport( e.getValue( ) );
-            List<IdentityAttributeDataObject> attributes = IdentityAttributeHome.selectAttributesByIdentities( listIdentityDataObject );
-
-            for ( IdentityDataObject identity : listIdentityDataObject )
+            if ( !listIdentityDataObject.isEmpty ( ) )
             {
-                List<IdentityAttributeDataObject> listIdentityAttributes = attributes.stream( )
-                        .filter( at -> at.getIdIdentity( ) == Integer.valueOf( identity.getId( ) ) )
-                        .sorted( Comparator.comparing( IdentityAttributeDataObject::getLastUpdateDate, Comparator.nullsLast( Comparator.reverseOrder( ) ) ) )
-                        .collect( Collectors.toList( ) );
-                if ( listIdentityAttributes.size( ) > 0 )
+                List<IdentityAttributeDataObject> attributes = IdentityAttributeHome.selectAttributesByIdentities( listIdentityDataObject );
+    
+                for ( IdentityDataObject identity : listIdentityDataObject )
                 {
-                    Timestamp lastUpdateAttribute = listIdentityAttributes.get( 0 ).getLastUpdateDate( );
-                    if ( identity.getLastUpdate( ) == null || identity.getLastUpdate( ).before( lastUpdateAttribute ) )
+                    List<IdentityAttributeDataObject> listIdentityAttributes = attributes.stream( )
+                            .filter( at -> at.getIdIdentity( ) == Integer.valueOf( identity.getId( ) ) )
+                            .sorted( Comparator.comparing( IdentityAttributeDataObject::getLastUpdateDate, Comparator.nullsLast( Comparator.reverseOrder( ) ) ) )
+                            .collect( Collectors.toList( ) );
+                    if ( listIdentityAttributes.size( ) > 0 )
                     {
-                        identity.setLastUpdate( lastUpdateAttribute );
+                        Timestamp lastUpdateAttribute = listIdentityAttributes.get( 0 ).getLastUpdateDate( );
+                        if ( identity.getLastUpdate( ) == null || identity.getLastUpdate( ).before( lastUpdateAttribute ) )
+                        {
+                            identity.setLastUpdate( lastUpdateAttribute );
+                        }
                     }
+                    identity.getListAttribute( ).putAll( getAttributes( listIdentityAttributes ) );
                 }
-                identity.getListAttribute( ).putAll( getAttributes( listIdentityAttributes ) );
+                collResult.addAll( listIdentityDataObject );
             }
-            collResult.addAll( listIdentityDataObject );
         } );
 
         return collResult;
